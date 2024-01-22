@@ -17,7 +17,7 @@ export const AddContactForm = ({ handleAddProfile }) => {
 
     const { name, number } = formData;
 
-    const formattedNumber = number.replace(/[^0-9-]/g, ""); // Remove non-numeric characters
+    const formattedNumber = number.replace(/[^0-9-]/g, "");
     const formattedFormData = {
       name,
       number: formattedNumber,
