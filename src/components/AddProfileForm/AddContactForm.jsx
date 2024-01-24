@@ -1,34 +1,23 @@
-import React, { useState } from "react";
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../../redux/contactSlice';
 import css from './AddContactForm.module.css';
 
-export const AddContactForm = ({ handleAddProfile }) => {
-  const [formData, setFormData] = useState({
-    name: "",
-    number: "",
-  });
+export const AddContactForm = () => {
+  const dispatch = useDispatch();
 
-  const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const handleSubmitForm = evt => {
+    evt.preventDefault();
+    const name = evt.target.elements.name.value;
+    const number = evt.target.elements.number.value;
 
-  const handleEventSubmit = (event) => {
-    event.preventDefault();
+    dispatch(addContact(name, number));
 
-    const { name, number } = formData;
-
-    const formattedNumber = number.replace(/[^0-9-]/g, "");
-    const formattedFormData = {
-      name,
-      number: formattedNumber,
-    };
-
-    handleAddProfile(formattedFormData);
-    setFormData({ name: "", number: "" });
+    evt.target.reset();
   };
 
   return (
-    <form className={css.form} onSubmit={handleEventSubmit}>
+    <form className={css.form} onSubmit={handleSubmitForm}>
       <label className={css.label}>
         <span>Name: </span>
         <input
@@ -36,8 +25,6 @@ export const AddContactForm = ({ handleAddProfile }) => {
           placeholder="Name"
           name="name"
           pattern="^[a-zA-Zа-яА-Я]+(([' \-][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-          value={formData.name}
-          onChange={handleInputChange}
           required
         />
       </label>
@@ -49,8 +36,6 @@ export const AddContactForm = ({ handleAddProfile }) => {
           placeholder="111-11-11"
           name="number"
           title="Number may contain only numbers and dashes. For example 111-11-11"
-          value={formData.number}
-          onChange={handleInputChange}
           required
         />
       </label>
@@ -60,5 +45,3 @@ export const AddContactForm = ({ handleAddProfile }) => {
     </form>
   );
 };
-
-export default AddContactForm;

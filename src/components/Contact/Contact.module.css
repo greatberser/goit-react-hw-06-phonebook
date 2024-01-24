@@ -9,6 +9,12 @@
     gap: 5px;
     justify-content: space-between;
     align-content: center;
+    color: black;
+}
+
+.contactName{
+    max-width: 45px;
+    overflow-x: auto;
 }
 
 .contactDelete{
